@@ -1,0 +1,10 @@
+src/Log4NetAppenders/bin
+src/Log4NetAppenders/obj
+src/Log4NetAppenders/Log4NetAppenders.nuspec.bak
+src/Log4NetAppenders.UnitTest/bin
+src/Log4NetAppenders.UnitTest/obj
+src/TestResults
+src/.vs
+.gitignore.bak
+
+

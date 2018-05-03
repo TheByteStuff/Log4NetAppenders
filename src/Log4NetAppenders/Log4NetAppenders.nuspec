@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>TheByteStuff.Log4NetAppenders</id>
+    <version>1.0.0</version>
+    <title>Log4NetAppenders</title>
+    <authors>The Byte Stuff, LLC</authors>
+    <owners>The Byte Stuff, LLC</owners>
+    <licenseUrl>https://github.com/TheByteStuff/Log4NetAppenders/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/TheByteStuff/Log4NetAppenders</projectUrl>
+<!--    
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+-->    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Appenders for Apache log4net specifically to allow remote SSL logging to a syslog running on a Synology NAS.
+    	This should work with any syslog conforming to the BSD specification.</description>
+    <releaseNotes>Initial Release including RemoteSyslogSSLAppender and RemoteSyslogAsyncSSLAppender.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>log4net appender syslog</tags>
+  </metadata>
+</package>
