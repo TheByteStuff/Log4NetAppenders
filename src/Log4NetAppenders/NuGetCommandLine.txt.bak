@@ -1,0 +1,22 @@
+
+https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-visual-studio-net-framework
+
+# update assembly version in project then build the *.nupkg file from "Command Prompt":
+
+cd C:\Users\brian\OneDrive\github\TheByteStuff\Log4NetAppenders\src\Log4NetAppenders
+
+# nuget spec Log4NetAppenders.nuspec  <--- First time only to create spec file
+
+# To create or update the package:
+nuget pack 
+
+
+# publish the package  (see wallet for command sample and api key)
+nuget push TheByteStuff.Log4NetAppenders.XX.0.0.nupkg <<api key>>  -Source https://api.nuget.org/v3/index.json
+
+
+nuget push TheByteStuff.Log4NetAppenders.2.0.0.nupkg oy2kfjedbslsiixxu4xqjyjoe263shiuheiu7ubxc5ewh4  -Source https://api.nuget.org/v3/index.json
+
+
+
+

@@ -13,14 +13,11 @@ using System.Threading;
 
 namespace Log4NetAppenders.UnitTest
 {
-    /*
-     * Copied from https://github.com/cityindex/log4net.Appenders.Contrib
-     * 
-     *  Create your own test certs at http://www.selfsignedcertificate.com/
-     *  Create the pfx file using openssl:
-     *          openssl pkcs12 -export -out domain.name.pfx -inkey domain.name.key -in domain.name.crt
-     * 
-     */
+    //Copied from https://github.com/cityindex/log4net.Appenders.Contrib
+    //
+    // Create your own test certs at http://www.selfsignedcertificate.com/
+    // Create the pfx file using openssl:
+    // openssl pkcs12 -export -out domain.name.pfx -inkey domain.name.key -in domain.name.crt
     class MockServer : IDisposable
     {
         public void Start(int port, string certificatePath)

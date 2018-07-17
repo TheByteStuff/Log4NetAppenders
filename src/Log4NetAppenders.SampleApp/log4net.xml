@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<log4net debug="true">
+  <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+    <threshold value="ALL"/>
+    <!-- This allows limiting log messages, regardless of how called. -->
+    <file value="D:\ApplicationLogs\SampleApp.log"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Date"/>
+    <!--      
+      <MaximumFileSize value="512KB"/>
+      -->
+    <datePattern value="'.'yyyyMM'.log'"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level&#xD;&#xA;                  %logger %X{user} %X{url} - %message%newline"
+             />
+    </layout>
+  </appender>
+
+  <appender name="RollingLogFileAppenderEncrypted" type="log4net.Appender.RollingFileAppender">
+    <threshold value="ALL"/>
+    <!-- This allows limiting log messages, regardless of how called. -->
+    <file value="D:\ApplicationLogs\SampleAppEncrypted.log"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Date"/>
+    <!--      
+      <MaximumFileSize value="512KB"/>
+      -->
+    <datePattern value="'.'yyyyMM'.log'"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level&#xD;&#xA;                  %logger %X{user} %X{url} - %message%newline"
+             />
+    </layout>
+  </appender>
+
+
+  <appender name="RollingLogFileAppenderEncrypted2" type="log4net.Appender.RollingFileAppender">
+    <threshold value="ALL"/>
+    <file value="D:\ApplicationLogs\SampleAppEncrypted2.log"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Date"/>
+    <datePattern value="'.'yyyyMM'.log'"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level&#xD;&#xA;                  %logger %X{user} %X{url} - %message%newline"
+             />
+    </layout>
+  </appender>
+
+
+  <appender name="EncryptedAppenderTBS" type="TheByteStuff.log4net.Appenders.EncryptedForwardingAppender,Log4NetAppenders">
+    <threshold value="ALL"/>
+    <AppName value="EncryptedAppenderTBSAppenderSample"/>
+    <PublicKeyFileNameAndPath/>
+    <PublicKeyInline>-----BEGIN PGP PUBLIC KEY BLOCK-----
+      Version: GnuPG v2
+
+      mQENBFsNrLoBCADL7Z/hDdMFm18oO9u8o/QKCcJWtp9RxkI+gOANX03gBLv8+Ad1
+      LpDR4/ptZACyz4lE9nzBYjZJKmjgoV8SEoGX3lHGmBPetaEh4EdzYOYG7Ty7XiN0
+      VZ7BIuEwgQ32TvQ0gwJuIyEIXYEPpX6UK044BLFZFjSXA8ooqHIY5pj9P+kVblmw
+      i/SOi2pMga5q1t0r+jnnrvFy6Z85/p4TxNhSBaUJzaXTIzEt85ujv3+z/lAf5FEf
+      GoOaxinKSgchyAWAN1+piEaNssVEigVcTTplxm6BUKobA6naGq0n3E6oX0m8ENow
+      fd9DM76BYi/hicludvt0lwNVZbLPGy4W2S7PABEBAAG0MUdQRyBUZXN0VXNlciAo
+      VGVzdCBVc2UgT25seSkgPHRlc3R1c2VyQGdtYWlsLmNvbT6JATkEEwEIACMFAlsN
+      rLoCGwMHCwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRD4pnzEGHdCDErnB/43
+      JE8BVHewDemPIrNkAHWlwJOPvohDyIB2JTu7meTcSvNmLyNw3QlUMQSbmKPhulzF
+      i6kx4Bu3oi398CzGRAu06a/9rj8aTjbVzEFYXH8R6YnmXKashzbxmJLKniDNEUnm
+      reAMz4PcFnhdWI2ADSnmhry84VW83netwcyKYqTHJisYuPeU+YF9kvohOrKZ+P34
+      YF/sM3mnApCQQcEhPcHhG05+mP0vGahQkFn3nfR9RMKCE6ixKx/K0LFbI9u6+ckN
+      vOIQ01kEfExHf/78EN5kMYR9IYc82KIz5wAngVUKPD8YE3daHvj19r98O4NNrRnR
+      6qbR+ovqjMsUCWYHxEZpuQENBFsNrLoBCADU0m0AYu3ZHn/zx01e/YEO9YtSWUBo
+      V3w+piradZI6ryR2qftciWY5cjmFFtsDXeluHx+/fm02HGoIWjdREqLElxd4/8io
+      YC3lXLYUhmIK6CMKOuV5MOWOwx0o17JPly8+T62sEdn1b1qrhx8bceXuBkRSedrc
+      eHt014PNgyG3f8T8NkuafUPy+fzhIlaTLIXbHZ2GXeXaxf0EqO36idofWKvkeLfT
+      sSijKZNRFV1smrS758HCrPzERcnfTWESAU2hsY3r4NipWsK2r2CJYP310y+KrGPf
+      /yHt6vRo4N/yO1IdMOywQu0SsJJ8Nb9GhuNp22lNcNgBscHP1MHbzP3VABEBAAGJ
+      AR8EGAEIAAkFAlsNrLoCGwwACgkQ+KZ8xBh3QgzObAgAum+4QgfGe/QuW3sdvHKw
+      7qlxhlMC2+ZGFMCgWJpwQ2PsHmiH/8nkIgIRj90HNdqaajaRiIy7iYAmGwuPitUJ
+      HE6HgenKcm1c9y+t+xb3rnRpCTZrldrQOHlvOZTsV1pKnU+86DBrbTcbGoWlAdYH
+      HNoi9FTwNrLi5QisSfNRGEm7Mv2U++CyRJqSUd9kINOruCfzpgLWq4fvmqJ0lR3f
+      Mxa8O8PgtPT98BollUztuGpQ7k2K1u+TlOdpZamGBK+7frJYqoPYkXA9LKnb1RqA
+      BPbo9OmNNQ2GgaHsPyibI0GRjKvibA7iZIf02/M+Usq+WqwdnTwPUJHiZ+dBVr4L
+      uA==
+      =HaYM
+      -----END PGP PUBLIC KEY BLOCK-----
+    </PublicKeyInline>
+    <EnableDiagnosticInfo value="true"/>
+    <EnableRemoteDiagnosticInfo value="true"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%.255message"/>
+    </layout>
+    <appender-ref ref="RollingLogFileAppenderEncrypted"/>
+  </appender>
+
+  
+  <appender name="EncryptedAppenderTBS2" type="TheByteStuff.log4net.Appenders.EncryptedForwardingAppender,Log4NetAppenders">
+    <threshold value="ALL"/>
+    <AppName value="EncryptedAppenderTBSAppenderSample"/>
+    <PublicKeyFileNameAndPath value ="..\..\..\Log4NetAppenders.SampleApp\Encryption\testuserPublic.asc"/>
+    <EnableDiagnosticInfo value="true"/>
+    <EnableRemoteDiagnosticInfo value="true"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%.255message"/>
+    </layout>
+    <appender-ref ref="RollingLogFileAppenderEncrypted2"/>
+  </appender>
+
+
+  <appender name="RemoteSyslogSSLAppender" type="TheByteStuff.log4net.Appenders.RemoteSyslogSSLAppender,Log4NetAppenders">
+    <threshold value="ALL"/>
+    <AppName value="RemoteSyslogSSLAppenderSample"/>
+    <RemoteHost value="127.0.0.1"/>
+    <RemotePort value="50515"/>
+    <CertificatePath value ="..\..\..\Log4NetAppenders.SampleApp\Certificate\localhost.cert"/>
+    <SysLogFacility value="Local4"/>
+    <EnableDiagnosticInfo value="true"/>
+    <EnableRemoteDiagnosticInfo value="true"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%.255message"/>
+    </layout>
+  </appender>
+
+  <appender name="RemoteSyslogAsyncSSLAppender" type="TheByteStuff.log4net.Appenders.RemoteSyslogAsyncSSLAppender,Log4NetAppenders">
+    <threshold value="ALL"/>
+    <AppName value="RemoteSyslogAsyncSSLAppenderSample"/>
+    <RemoteHost value="127.0.0.1"/>
+    <RemotePort value="50515"/>
+    <CertificatePath value ="..\..\..\Log4NetAppenders.SampleApp\Certificate\localhost.cert"/>
+    <SysLogFacility value="Local5"/>
+    <EnableDiagnosticInfo value="true"/>
+    <EnableRemoteDiagnosticInfo value="true"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%.255message"/>
+    </layout>
+  </appender>
+
+  <appender name="RemoteSyslogSSLAppenderDiagLogger" type="log4net.Appender.RollingFileAppender">
+    <threshold value="ALL"/>
+    <!-- This allows limiting log messages, regardless of how called. -->
+    <file value="D:\ApplicationLogs\SampleApp_RemoteSyslogSSLAppenderDiagLogger.log"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Date"/>
+    <!--      
+      <MaximumFileSize value="512KB"/>
+      -->
+    <datePattern value="'.'yyyyMM'.log'"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level&#xD;&#xA;                  %logger %X{user} %X{url} - %message%newline"
+                                                              />
+    </layout>
+  </appender>
+
+  <root>
+    <level value="ALL"/>
+  </root>
+  <!--
+    Log Levels:
+    OFF     - Log Nothing
+    FATAL   - Fatal
+    ERROR   - Error and Fatal
+    WARN    - Warn, Error, Fatal
+    INFO    - ...
+    DEBUG   -
+    ALL     - Log Everything
+    -->
+  <logger name="Application">
+    <!--Set level for this logger-->
+    <level value="ALL"/>
+    <appender-ref ref="RemoteSyslogSSLAppender"/>
+    <appender-ref ref="RollingLogFileAppender"/>
+  </logger>
+
+  <logger name="Application2">
+    <!--Set level for this logger-->
+    <level value="ALL"/>
+    <appender-ref ref="RemoteSyslogAsyncSSLAppender"/>
+    <appender-ref ref="RollingLogFileAppender"/>
+  </logger>
+
+  <logger name="ApplicationEncrypted">
+    <!--Set level for this logger-->
+    <level value="ALL"/>
+    <appender-ref ref="EncryptedAppenderTBS"/>
+  </logger>
+
+  <logger name="ApplicationEncrypted2">
+    <!--Set level for this logger-->
+    <level value="ALL"/>
+    <appender-ref ref="EncryptedAppenderTBS2"/>
+  </logger>
+</log4net>

@@ -101,7 +101,6 @@ namespace Log4NetAppenders.UnitTest
         }
 
         //Appender initialization Exception Checks
-
         [TestMethod]
         public void TestCertPathNotDefinedSkipDisableSSL()
         {
@@ -166,6 +165,7 @@ namespace Log4NetAppenders.UnitTest
             Assert.Fail("Expected Exception not hit.");
         }
 
+        //The following test currently fails
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Host specified by property 'RemoteHost' is not a valid URI.")]
         public void TestRemoteHostNotValidException()

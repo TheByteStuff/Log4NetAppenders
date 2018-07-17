@@ -172,6 +172,7 @@ namespace Log4NetAppenders.UnitTest
             Assert.Fail("Expected Exception not hit.");
         }
 
+        //The following test currently fails
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Host specified by property 'RemoteHost' is not a valid URI.")]
         public void TestRemoteHostNotValidException()
@@ -616,7 +617,6 @@ namespace Log4NetAppenders.UnitTest
         [TestMethod]
         public void TestMessageReceipt()
         {
-            //This test works when run individually, but tends to fail during "Run All".  Needs further investigation.
             var sentMessages = new List<string>();
             _server.ClearMessages();
 
@@ -664,7 +664,6 @@ namespace Log4NetAppenders.UnitTest
         [TestMethod]
         public void TestMessagesProcessed()
         {
-            //Cloned from another project.  Appeared to be testing for an expected % message drop.  Currently fails.
             var sentMessages = new List<string>();
             var i = 0;
 
