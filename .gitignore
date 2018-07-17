@@ -6,7 +6,7 @@ src/Log4NetAppenders/bin
 src/Log4NetAppenders/obj
 src/Log4NetAppenders/Log4NetAppenders.nuspec.bak
 src/Log4NetAppenders/NuGetCommandLine.txt
-src/Log4NetAppenders/NuGetCommandLine.bak
+src/Log4NetAppenders/NuGetCommandLine.txt.bak
 src/Log4NetAppenders.ReferenceApp
 src/Log4NetAppenders.SampleApp/bin
 src/Log4NetAppenders.SampleApp/obj
