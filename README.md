@@ -12,4 +12,4 @@ RemoteSyslogSSLAppender and RemoteSyslogAsyncSSLAppender: Appenders specifically
 EncryptedForwardingAppender: ForwardingAppender to allow encryption of logged messages (both the message text and exception text).  Current implementation uses PGP/GPG encryption.
 
 
-Note: certificates and encryption keys are supplied in the code base for use with the unit tests and to provide a functioning example.  New entities should be created to use with your deployment.
+Note: SSL certificates and PGP encryption keys are supplied in the code base for use with the unit tests and to provide a functioning example.  New entities should be created to use with your deployment.
