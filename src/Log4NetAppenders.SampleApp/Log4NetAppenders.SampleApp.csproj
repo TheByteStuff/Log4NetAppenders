@@ -52,7 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="Certificate\localhost.cert" />
     <None Include="Certificate\localhost.key" />
     <None Include="Certificate\localhost.pfx" />
