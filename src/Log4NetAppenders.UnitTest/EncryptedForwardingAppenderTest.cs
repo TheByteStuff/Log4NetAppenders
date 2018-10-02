@@ -54,14 +54,6 @@ namespace Log4NetAppenders.UnitTest
             var layout = new PatternLayout("%.255message");
             layout.ActivateOptions();
 
-            //TODO
-            /*
-             * 
-             * Need to Capture the log messages for validation, use some sort of 
-             * server implenmentation or maybe even an RMI type of call?
-             * 
-             */
-
             var appender = new EncryptedForwardingAppender()
             {
                 Layout = layout,
@@ -83,8 +75,6 @@ namespace Log4NetAppenders.UnitTest
             BasicConfigurator.Configure(diagAppender, appender);
 
             _appender = appender;
-            //_log = LogManager.GetLogger(typeof(RemoteSyslogSSLAppenderTest));
-            //_log = LogManager.GetLogger(typeof(RemoteSyslogSSLAppender));
             _log = LogManager.GetLogger("EncryptedForwardingAppender");
         }
 
@@ -117,7 +107,6 @@ namespace Log4NetAppenders.UnitTest
         }
 
         //Appender initialization Exception Checks
-
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "File specified by property 'PublicKeyFileNameAndPath' was not found.")]
