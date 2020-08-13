@@ -1,5 +1,7 @@
 # Log4NetAppenders
 
+[![Gitter](https://badges.gitter.im/TheByteStuff/Log4NetAppenders.svg)](https://gitter.im/TheByteStuff/Log4NetAppenders?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This project supplies Appenders for Apache log4net as well as some sample/reference applications.
 
 Use of this software is free.  
