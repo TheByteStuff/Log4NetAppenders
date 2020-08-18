@@ -90,7 +90,8 @@ namespace TheByteStuff.log4net.Appenders
             };
         }
 
-        string Domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
+        string Domain = "test"; // System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
+        //string test = System.Environment. .UserDomainName;
         string hostName = Dns.GetHostName();
         string FormattedHostName = String.Empty;
 
@@ -107,7 +108,11 @@ namespace TheByteStuff.log4net.Appenders
         {
             //TODO - allow HostName to be configured from Log Definition?
             string LocalIp = string.Empty;
-            System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            //System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            Task<IPHostEntry> GetHostTask = System.Net.Dns.GetHostEntryAsync(System.Net.Dns.GetHostName());
+            Task.WaitAll(GetHostTask);
+            System.Net.IPHostEntry host = GetHostTask.Result;
+
             foreach (System.Net.IPAddress ip in host.AddressList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -144,11 +149,12 @@ namespace TheByteStuff.log4net.Appenders
         private readonly TimeSpan _defaultSendingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _maxSendingPeriod = TimeSpan.FromMinutes(10);
 
+        private readonly int TaskWaitTime = 2000;
         private readonly Queue<string> _messageQueue = new Queue<string>();
         private readonly object _connectionSync = new object();
         private readonly object _sendingSync = new object();
 
-        private readonly ILog _log = LogManager.GetLogger("RemoteSyslogAsyncSSLAppenderDiagLogger");
+        private readonly ILog _log = LogManager.GetLogger(typeof(RemoteSyslogAsyncSSLAppender));
 
         public int MaxQueueSize = 1024 * 1024;
 
@@ -198,6 +204,12 @@ namespace TheByteStuff.log4net.Appenders
         {
             get { return m_Certificate; }
             set { m_Certificate = value; }
+        }
+
+        public string DomainName
+        {
+            get { return m_DomainName; }
+            set { m_DomainName = value; }
         }
 
         public string SysLogFacility
@@ -332,7 +344,7 @@ namespace TheByteStuff.log4net.Appenders
 
             try
             {
-                Thread.MemoryBarrier();
+                // TODO fix -- Thread.MemoryBarrier();
                 _senderThread.Start();
             }
             catch (Exception exc)
@@ -616,6 +628,11 @@ namespace TheByteStuff.log4net.Appenders
         private string m_Certificate;
 
         /// <summary>
+        /// The DomainName of the host logger.
+        /// </summary>
+        private string m_DomainName=String.Empty;
+
+        /// <summary>
         /// The SysLog Facility to encode on the logging event will be sent.
         /// </summary>
         private string m_SysLogFacility;
@@ -678,7 +695,8 @@ namespace TheByteStuff.log4net.Appenders
                         ? new X509Certificate(Encoding.ASCII.GetBytes(Certificate.Trim()))
                         : new X509Certificate(CertificatePath);
                     var certificates = new X509CertificateCollection(new[] { certificate });
-                    _stream.AuthenticateAsClient(RemoteHost, certificates, SslProtocols.Tls, false);
+                    Task clientAuthenticationTask = _stream.AuthenticateAsClientAsync(RemoteHost, certificates, SslProtocols.Tls, false);
+                    Task.WaitAll(clientAuthenticationTask);
                     //_writer = new StreamWriter(_stream, Encoding.UTF8);
                     _writer = new StreamWriter(_stream);
                 }
@@ -702,12 +720,12 @@ namespace TheByteStuff.log4net.Appenders
                 _closing = true;
 
                 // give the sender thread some time to flush the messages
-                _senderThread.Join(TimeSpan.FromSeconds(2));
+                _senderThread.Join(TaskWaitTime);
 
-                _senderThread.Interrupt();
-                _senderThread.Join(TimeSpan.FromSeconds(1));
+                // TODO fix -- _senderThread.Interrupt();
+                _senderThread.Join(TaskWaitTime);
 
-                _senderThread.Abort();
+                // TODO fix -- _senderThread.Abort();
 
                 _disposed = true;
             }
@@ -761,7 +779,9 @@ namespace TheByteStuff.log4net.Appenders
                     try
                     {
                         if (_socket.Connected)
-                            _socket.Disconnect(true);
+                        {
+                            // TODO fix -- _socket.Disconnect(true);
+                        }
                     }
                     catch (Exception exc)
                     {
@@ -782,10 +802,11 @@ namespace TheByteStuff.log4net.Appenders
 
         private void LogStartupInfo()
         {
-            var entryAssembly = Assembly.GetEntryAssembly();
+            Assembly entryAssembly = typeof(RemoteSyslogSSLAppender).GetTypeInfo().Assembly;
+            //var entryAssembly = Assembly.GetEntryAssembly();
             var message = string.Format("Starting '{0}' '{1}",
-                (entryAssembly != null) ? Assembly.GetEntryAssembly().FullName : Process.GetCurrentProcess().MainModule.FileName,
-                Assembly.GetExecutingAssembly().FullName);
+                (entryAssembly != null) ? entryAssembly.FullName : Process.GetCurrentProcess().MainModule.FileName,
+                entryAssembly.FullName);
             LogDiagnosticInfo(message);
         }
 
@@ -852,7 +873,7 @@ namespace TheByteStuff.log4net.Appenders
                         LogStartupInfo();
                         break;
                     }
-                    Thread.Yield();
+                    // TODO fix -- Thread.Yield();
                 }
 
                 while (!_disposed)
@@ -866,9 +887,10 @@ namespace TheByteStuff.log4net.Appenders
                         Thread.Sleep(10);
                 }
             }
-            catch (ThreadInterruptedException)
-            {
-            }
+            // TODO fix -- 
+            //catch (ThreadInterruptedException)
+            //{
+            //}
             catch (Exception exc)
             {
                 LogError(exc);
@@ -881,12 +903,13 @@ namespace TheByteStuff.log4net.Appenders
             {
                 SendMessages();
             }
-            catch (ThreadInterruptedException)
-            {
-            }
-            catch (ThreadAbortException)
-            {
-            }
+            // TODO fix -- 
+            //catch (ThreadInterruptedException)
+            //{
+            //}
+            //catch (ThreadAbortException)
+            //{
+            //}
             catch (ObjectDisposedException)
             {
             }
@@ -969,13 +992,13 @@ namespace TheByteStuff.log4net.Appenders
             var thread = new Thread(TrySendMessages);
             thread.Start();
 
-            if (!thread.Join(TimeSpan.FromSeconds(maxTimeSecs)))
+            if (!thread.Join(TaskWaitTime))
             {
-                thread.Interrupt();
-                if (!thread.Join(TimeSpan.FromSeconds(0.1)))
-                    thread.Abort();
+                // TODO fix -- 
+                //thread.Interrupt();
+                //if (!thread.Join(TaskWaitTime))
+                //    thread.Abort();
             }
         }
-
     }
 }

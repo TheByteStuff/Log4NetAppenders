@@ -105,7 +105,6 @@ namespace Log4NetAppenders.UnitTest
         }
 
         //Appender initialization Exception Checks
-
         [TestMethod]
         public void TestCertPathNotDefinedSkipDisableSSL()
         {
@@ -172,14 +171,12 @@ namespace Log4NetAppenders.UnitTest
             Assert.Fail("Expected Exception not hit.");
         }
 
-        //The following test currently fails
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Host specified by property 'RemoteHost' is not a valid URI.")]
         public void TestRemoteHostNotValidException()
         {
-            //TODO - determine if any test config can trigger ArgumentOutOfRangeException on invalid host
             string expectedFacility = "Kernel";
-            var appender = new RemoteSyslogSSLAppender("192.168.256.1", Port, testClientCertificate)
+            var appender = new RemoteSyslogSSLAppender("192.168.252 .1", Port, testClientCertificate)
             {
                 Name = "TestRemoteHostNotValidException",
                 SysLogFacility = expectedFacility,
@@ -188,6 +185,36 @@ namespace Log4NetAppenders.UnitTest
             appender.ActivateOptions();
             int priority = appender.GeneratePriority(RemoteSyslogSSLAppender.SyslogSeverity.Emergency);
             Assert.Fail("Expected Exception not hit.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException), "The value specified -1 is less than 0 or greater than 65535.")]
+        public void TestRemotePortOutOfRange_BelowException()
+        {
+            string expectedFacility = "Kernel";
+            var appender = new RemoteSyslogSSLAppender()
+            {
+                RemoteHost = localHost,
+                RemotePort = -1,
+                CertificatePath = testClientCertificate,
+                SysLogFacility = expectedFacility,
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException), "The value specified 65536 is less than 0 or greater than 65535.")]
+        public void TestRemotePortOutOfRange_AboveException()
+        {
+            string expectedFacility = "Kernel";
+            var appender = new RemoteSyslogSSLAppender()
+            {
+                RemoteHost = localHost,
+                RemotePort = 65536,
+                CertificatePath = testClientCertificate,
+                SysLogFacility = expectedFacility,
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
         }
 
 
@@ -263,6 +290,71 @@ namespace Log4NetAppenders.UnitTest
             appender.ActivateOptions();
             int priority = appender.GeneratePriority(RemoteSyslogSSLAppender.SyslogSeverity.Emergency);
             Assert.Fail("Expected Exception not hit.");
+        }
+
+
+        [TestMethod]
+        public void TestDomainName()
+        {
+            string expectedFacility = "Kernel";
+            var appender = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility,
+                DomainName="TestDomain",
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
+
+            Assert.AreEqual("TestDomain", appender.DomainName);
+
+            var appender2 = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility,
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
+            Assert.AreEqual(String.Empty, appender2.DomainName);
+        }
+
+
+        [TestMethod]
+        public void TestAppName()
+        {
+            string expectedFacility = "Kernel";
+            var appender = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility,
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
+            Assert.AreEqual(typeof(RemoteSyslogSSLAppenderTest).Name, appender.AppName);
+
+            var appender2 = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility
+            };
+            Assert.AreEqual("-", appender2.AppName);
+        }
+
+        [TestMethod]
+        public void TestDiagnosticFlags()
+        {
+            string expectedFacility = "Kernel";
+            var appender = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility,
+                EnableDiagnosticInfo=true,
+                EnableRemoteDiagnosticInfo=true,
+                AppName = typeof(RemoteSyslogSSLAppenderTest).Name
+            };
+            Assert.AreEqual(true, appender.EnableDiagnosticInfo);
+            Assert.AreEqual(true, appender.EnableRemoteDiagnosticInfo);
+
+            var appender2 = new RemoteSyslogSSLAppender(localHost, Port, testClientCertificate)
+            {
+                SysLogFacility = expectedFacility,
+                EnableDiagnosticInfo = false,
+                EnableRemoteDiagnosticInfo = false
+            };
+            Assert.AreEqual(false, appender2.EnableDiagnosticInfo);
+            Assert.AreEqual(false, appender2.EnableRemoteDiagnosticInfo);
         }
 
 

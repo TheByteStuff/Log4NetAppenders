@@ -205,10 +205,18 @@ namespace TheByteStuff.log4net.Appenders
             Stream encOut = encGen.Open(output, processedData.Length);
 
             encOut.Write(processedData, 0, processedData.Length);
-            encOut.Close();
+            // TODO fix -- encOut.Close();
+            // try flush, not Flush?
+            encOut.Flush();
+            encOut.Dispose();
 
             if (armor)
-                output.Close();
+            {
+
+                output.Flush();
+                output.Dispose();
+                //output.Close();
+            }
 
             return System.Text.Encoding.UTF8.GetString(bOut.ToArray());
         }
@@ -233,7 +241,10 @@ namespace TheByteStuff.log4net.Appenders
             );
 
             pOut.Write(clearData, 0, clearData.Length);
-            pOut.Close();
+            //TODO - try this to fix no close
+            pOut.Flush();
+            pOut.Dispose();
+            // pOut.Close();
 
             comData.Close();
 

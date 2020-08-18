@@ -46,7 +46,7 @@ namespace Log4NetAppenders.SampleApp
             logger.Debug("This is an encryption debug test with exception.", ex);
             /*/
             ILog logger = LogManager.GetLogger("ApplicationEncrypted2");
-            logger.Debug("his is an encryption debug test using PublicKeyFileNameAndPath.");
+            logger.Debug("This is an encryption debug test using PublicKeyFileNameAndPath.");
             //*/
         }
 
