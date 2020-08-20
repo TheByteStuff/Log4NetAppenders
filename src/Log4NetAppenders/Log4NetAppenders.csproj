@@ -4,7 +4,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>Full</DebugType>
     <RootNamespace>TheByteStuff.AzureTableUtilities</RootNamespace>
-    <Version>3.0.0-pre</Version>
+    <Version>3.0.0</Version>
     <Company>The Byte Stuff, LLC</Company>
     <Authors>The Byte Stuff, LLC</Authors>
     <Description>Appenders for Apache log4net
