@@ -68,8 +68,6 @@ namespace Log4NetAppenders.UnitTest
             BasicConfigurator.Configure(diagAppender, appender);
 
             _appender = appender;
-            //_log = LogManager.GetLogger(typeof(RemoteSyslogSSLAppenderTest));
-            //_log = LogManager.GetLogger(typeof(RemoteSyslogSSLAppender));
             _log = LogManager.GetLogger("RemoteSyslogSSLAppender");
         }
 
@@ -806,9 +804,6 @@ namespace Log4NetAppenders.UnitTest
                 var message = FormatMessage("This is a log debug message " + i);
                 _log.Debug(message);
                 sentMessages.Add(message);
-                //message = FormatMessage("This is a log fatal message " + i);
-                //_log.Fatal(message);
-                //sentMessages.Add(message);
             }
 
             Thread.Sleep(TimeSpan.FromSeconds(16));

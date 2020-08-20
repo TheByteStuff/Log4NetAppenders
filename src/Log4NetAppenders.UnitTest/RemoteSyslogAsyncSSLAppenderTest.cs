@@ -792,9 +792,6 @@ namespace Log4NetAppenders.UnitTest
                 var message = FormatMessage("This is a log debug message " + i);
                 _log.Debug(message);
                 sentMessages.Add(message);
-                //message = FormatMessage("This is a log fatal message " + i);
-                //_log.Fatal(message);
-                //sentMessages.Add(message);
             }
 
             Thread.Sleep(TimeSpan.FromSeconds(16));
