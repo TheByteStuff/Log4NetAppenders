@@ -26,7 +26,6 @@ namespace Log4NetAppenders.UnitTest
     [TestClass]
     public class EncryptedForwardingAppenderTest
     {
-        //*
         private static string testServerCertificate = @".\Certificate\localhost.pfx";
         private static string testClientCertificate = @".\Certificate\localhost.cert";
 
@@ -71,7 +70,6 @@ namespace Log4NetAppenders.UnitTest
             };
             diagAppender.ActivateOptions();
 
-            //BasicConfigurator.Configure(new IAppender[] { diagAppender, appender });
             BasicConfigurator.Configure(diagAppender, appender);
 
             _appender = appender;
@@ -107,7 +105,6 @@ namespace Log4NetAppenders.UnitTest
         }
 
         //Appender initialization Exception Checks
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "File specified by property 'PublicKeyFileNameAndPath' was not found.")]
         public void TestPublicKeyFileNameAndPathInvalidException()
@@ -155,6 +152,17 @@ namespace Log4NetAppenders.UnitTest
 
 
         [TestMethod]
+        public void TestConstructor()
+        {
+            var appender = new EncryptedForwardingAppender(testPGPPublicKey, null);
+            appender.ActivateOptions();
+
+            var appender2 = new EncryptedForwardingAppender(null, testPGPPublicKeyInline);
+            appender2.ActivateOptions();
+        }
+
+
+        [TestMethod]
         public void TestMessageReceipt()
         {
             var sentMessages = new List<string>();
@@ -166,26 +174,31 @@ namespace Log4NetAppenders.UnitTest
             _log.Info(message);
             sentMessages.Add(message);
             expectedMessages++;
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             message = FormatMessage("This a log warning message ");
             _log.Warn(message);
             sentMessages.Add(message);
             expectedMessages++;
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             message = FormatMessage("This a log error message ");
             _log.Error(message);
             sentMessages.Add(message);
             expectedMessages++;
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             message = FormatMessage("This is a log debug message ");
             _log.Debug(message);
             sentMessages.Add(message);
             expectedMessages++;
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             message = FormatMessage("This is a log fatal message ");
             _log.Fatal(message);
             expectedMessages++;
             sentMessages.Add(message);
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             log4net.Core.LoggingEvent[] events = _memoryAppender.GetEvents();
 

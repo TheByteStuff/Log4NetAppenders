@@ -82,7 +82,7 @@ namespace TheByteStuff.log4net.Appenders
             FormattedHostName = FormatHostName();
         }
 
-        string Domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
+        //string Domain = "test"; // System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
         string hostName = Dns.GetHostName();
         string FormattedHostName = String.Empty;
 
@@ -99,7 +99,11 @@ namespace TheByteStuff.log4net.Appenders
         {
             //TODO - allow HostName to be configured from Log Definition?
             string LocalIp = string.Empty;
-            System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            
+            Task<IPHostEntry> GetHostTask  = System.Net.Dns.GetHostEntryAsync(System.Net.Dns.GetHostName());
+            Task.WaitAll(GetHostTask);
+            System.Net.IPHostEntry host = GetHostTask.Result;
+
             foreach (System.Net.IPAddress ip in host.AddressList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -114,9 +118,9 @@ namespace TheByteStuff.log4net.Appenders
             }
 
             string localDomain = "";
-            if (this.Domain.Trim().Length > 0)
+            if (!String.IsNullOrWhiteSpace(this.DomainName))
             {
-                localDomain = "/" + Domain;
+                localDomain = "/" + this.DomainName;
             }
 
             return hostName + localDomain + LocalIp;
@@ -131,7 +135,7 @@ namespace TheByteStuff.log4net.Appenders
         private volatile bool _disposed;
         private volatile bool _closing;
 
-        private readonly ILog _log = LogManager.GetLogger("RemoteSyslogSSLAppenderDiagLogger");
+        private readonly ILog _log = LogManager.GetLogger(typeof(RemoteSyslogSSLAppender));
 
         public int MaxQueueSize = 1024 * 1024;
 
@@ -181,6 +185,12 @@ namespace TheByteStuff.log4net.Appenders
         {
             get { return m_Certificate; }
             set { m_Certificate = value; }
+        }
+
+        public string DomainName
+        {
+            get { return m_DomainName; }
+            set { m_DomainName = value; }
         }
 
         public string SysLogFacility
@@ -587,6 +597,7 @@ namespace TheByteStuff.log4net.Appenders
 
         private SyslogFacility m_SysLogFacilityValue = SyslogFacility.Kernel;
 
+
         /// <summary>
         /// The TCP port number of the remote host or multicast group to 
         /// which the logging event will be sent.
@@ -594,6 +605,8 @@ namespace TheByteStuff.log4net.Appenders
         private int m_remotePort;
 
         private string _appName;
+
+        private string m_DomainName = String.Empty;
 
         #endregion Private Instance Fields
 
@@ -642,7 +655,8 @@ namespace TheByteStuff.log4net.Appenders
                     ? new X509Certificate(Encoding.ASCII.GetBytes(Certificate.Trim()))
                     : new X509Certificate(CertificatePath);
                 var certificates = new X509CertificateCollection(new[] { certificate });
-                _stream.AuthenticateAsClient(RemoteHost, certificates, SslProtocols.Tls, false);
+                Task clientAuthenticationTask = _stream.AuthenticateAsClientAsync(RemoteHost, certificates, SslProtocols.Tls, false);
+                Task.WaitAll(clientAuthenticationTask);
                 //_writer = new StreamWriter(_stream, Encoding.UTF8);
                 _writer = new StreamWriter(_stream);
             }
@@ -714,7 +728,10 @@ namespace TheByteStuff.log4net.Appenders
                 try
                 {
                     if (_socket.Connected)
-                        _socket.Disconnect(true);
+                    {
+                        // Disconnect method obsoleted
+                     //   _socket.Disconnect(true);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -734,10 +751,10 @@ namespace TheByteStuff.log4net.Appenders
 
         private void LogStartupInfo()
         {
-            var entryAssembly = Assembly.GetEntryAssembly();
+            Assembly entryAssembly = typeof(RemoteSyslogSSLAppender).GetTypeInfo().Assembly;
             var message = string.Format("Starting '{0}' '{1}",
-                (entryAssembly != null) ? Assembly.GetEntryAssembly().FullName : Process.GetCurrentProcess().MainModule.FileName,
-                Assembly.GetExecutingAssembly().FullName);
+                (entryAssembly != null) ? entryAssembly.FullName : Process.GetCurrentProcess().MainModule.FileName,
+                 entryAssembly.FullName);
             LogDiagnosticInfo(message);
         }
 
