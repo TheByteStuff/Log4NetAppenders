@@ -4,7 +4,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>Full</DebugType>
     <RootNamespace>TheByteStuff.AzureTableUtilities</RootNamespace>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <Company>The Byte Stuff, LLC</Company>
     <Authors>The Byte Stuff, LLC</Authors>
     <Description>Appenders for Apache log4net
@@ -19,14 +19,14 @@ Use of this software is free.
 
 Suggestions or donations are both appreciated and welcome can be made by using the "Contact" tab at https://www.thebytestuff.com/
 </Description>
-    <Copyright>2018-2020</Copyright>
+    <Copyright>2018-2021</Copyright>
     <PackageProjectUrl>https://github.com/TheByteStuff/Log4NetAppenders</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/TheByteStuff/Log4NetAppenders/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://github.com/TheByteStuff/Log4NetAppenders/blob/master/src/Log4NetAppenders/CardFront_Clip.ico</PackageIconUrl>
-    <PackageReleaseNotes>Changed from .NetFramework to .NetStandard1.3</PackageReleaseNotes>
-    <AssemblyVersion>3.0.0</AssemblyVersion>
+    <PackageReleaseNotes>Changed log4net from 2.0.8 to 2.0.10 per security concern.</PackageReleaseNotes>
+    <AssemblyVersion>4.0.0</AssemblyVersion>
     <RepositoryUrl>https://github.com/TheByteStuff/Log4NetAppenders</RepositoryUrl>
     <PackageTags>log4net appender syslog pgp encrypted</PackageTags>
     <RepositoryType>git</RepositoryType>
